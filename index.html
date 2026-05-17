@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUSDASI - Pusat Data Siswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="auth-container" class="page-view active">
+        
+        <div id="pusdasi-logo-container" title="Ketuk 3 kali untuk login admin">
+            <svg width="80" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 0 L95 20 V60 C95 90 50 120 50 120 C50 120 5 90 5 60 V20 Z" fill="#1a5276" stroke="#d4af37" stroke-width="4"/>
+                <path d="M20 40 L80 40 M20 60 L80 60 M40 80 L60 80" stroke="#e3f2fd" stroke-width="6" stroke-linecap="round"/>
+            </svg>
+            <h1 class="logo-text">PUSDASI</h1>
+        </div>
+        
+        <div class="auth-box" id="login-box">
+            <h2>Portal Masuk Siswa</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Alamat Email" required>
+                <input type="text" id="login-nisn" placeholder="Nomor Induk Siswa Nasional (NISN)" required>
+                <input type="date" id="login-dob" required>
+                
+                <div class="otp-section">
+                    <button type="button" id="btn-req-otp-login" class="btn-secondary">Minta Kode Akses (OTP)</button>
+                    <p class="timer-text">Waktu tersisa: <span id="timer-login">30</span>s</p>
+                    <p class="simulated-email" id="simulated-otp-login"></p>
+                    <input type="text" id="login-otp" placeholder="Masukkan Kode 6 Digit" required>
+                </div>
+                <button type="submit" class="btn-primary">Masuk ke Portal</button>
+            </form>
+            <p class="auth-switch">Belum terdaftar? <a href="#" onclick="switchAuth('register')">Registrasi Siswa Baru</a></p>
+        </div>
+
+        <div class="auth-box" id="register-box" style="display: none;">
+            <h2>Registrasi Siswa Baru</h2>
+            <form id="register-form">
+                <input type="text" id="reg-name" placeholder="Nama Lengkap Sesuai Ijazah" required>
+                <input type="email" id="reg-email" placeholder="Alamat Email Aktif" required>
+                <input type="text" id="reg-nisn" placeholder="NISN" required>
+                <input type="date" id="reg-dob" required>
+                
+                <div class="otp-section">
+                    <button type="button" id="btn-req-otp-reg" class="btn-secondary">Kirim Kode Registrasi (OTP)</button>
+                    <p class="timer-text">Waktu tersisa: <span id="timer-reg">30</span>s</p>
+                    <p class="simulated-email" id="simulated-otp-reg"></p>
+                    <input type="text" id="reg-otp" placeholder="Masukkan Kode 6 Digit" required>
+                </div>
+                <button type="submit" class="btn-primary">Selesaikan Registrasi</button>
+            </form>
+            <p class="auth-switch">Sudah terdaftar? <a href="#" onclick="switchAuth('login')">Masuk di sini</a></p>
+        </div>
+    </div>
+
+    <div id="admin-login-container" class="page-view">
+        <div class="auth-box">
+            <h2>Otoritas Admin</h2>
+            <form id="admin-login-form">
+                <input type="text" id="admin-username" placeholder="Nama Pengguna (admin)" required>
+                <input type="password" id="admin-password" placeholder="Kata Sandi (admin123)" required>
+                <button type="submit" class="btn-primary">Akses Dashboard</button>
+            </form>
+            <p class="auth-switch"><a href="#" onclick="showPage('auth-container')">Batal & Kembali</a></p>
+        </div>
+    </div>
+
+    <div id="student-home-container" class="page-view">
+        <nav class="luxury-nav">
+            <div class="nav-brand">
+                <svg width="30" height="35" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 0 L95 20 V60 C95 90 50 120 50 120 C50 120 5 90 5 60 V20 Z" fill="#fff" />
+                </svg>
+                <span>PUSDASI</span>
+            </div>
+            <div class="burger-menu" id="burger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#" id="logout-btn">Keluar dari Portal (Logout)</a>
+            </div>
+        </nav>
+        
+        <div class="home-content">
+            <div class="profile-card formal-card">
+                <div class="card-header">
+                    <h3>Kartu Identitas Siswa Resmi</h3>
+                    <p>Pusat Data Integrasi</p>
+                </div>
+                <div class="card-body">
+                    <div class="photo-wrapper">
+                        <img id="display-photo" src="" alt="Pas Foto Siswa" style="display: none;">
+                        <span id="photo-text" class="photo-placeholder-text">Pas Foto<br>Formal</span>
+                    </div>
+                    
+                    <div class="student-details">
+                        <h2 id="display-name" class="formal-name">Nama Siswa</h2>
+                        <div class="detail-row">
+                            <span>NISN</span>
+                            <span id="display-nisn" class="bold-value"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Tanggal Lahir</span>
+                            <span id="display-dob" class="bold-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notes-box">
+                    <span class="notes-title">Catatan Akademik & Prestasi khusus:</span>
+                    <p id="display-notes"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-dashboard-container" class="page-view">
+        <nav class="luxury-nav">
+            <div class="nav-brand">Dashboard Otoritas Admin</div>
+            <button onclick="logoutAdmin()" class="btn-logout">Tutup Sesi Admin</button>
+        </nav>
+        
+        <div class="admin-content">
+            <h2 class="formal-heading">Manajemen Data Integrasi Siswa</h2>
+            <button id="btn-admin-add-student" class="btn-success" onclick="openAdminModal('')">+ Tambah Siswa Baru</button>
+            
+            <div class="table-responsive">
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nama Lengkap</th>
+                            <th>NISN</th>
+                            <th>Email</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Catatan Otoritas</th>
+                            <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="modal-overlay">
+        <div class="modal-content auth-box">
+            <h2 id="modal-title">Tambah Data Siswa</h2>
+            <form id="admin-modal-form">
+                <input type="hidden" id="modal-id">
+                <input type="text" id="modal-name" placeholder="Nama Lengkap Sesuai Ijazah" required>
+                <input type="email" id="modal-email" placeholder="Alamat Email" required>
+                <input type="text" id="modal-nisn" placeholder="NISN" required>
+                <input type="date" id="modal-dob" required>
+                <textarea id="modal-notes" placeholder="Catatan Akademik / Prestasi Khusus" rows="3"></textarea>
+                
+                <div class="modal-file-section">
+                    <label>Unggah Pas Foto Formal (Opsional):</label>
+                    <input type="file" id="modal-photo" accept="image/*">
+                    
+                    <label>Atur Posisi Fokus Foto:</label>
+                    <select id="modal-position">
+                        <option value="center">Tengah (Proporsional)</option>
+                        <option value="top">Atas (Fokus Wajah / Kepala)</option>
+                        <option value="bottom">Bawah (Fokus Pakaian / Badan)</option>
+                    </select>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top: 15px;">
+                    <button type="submit" class="btn-primary" style="flex:1;">Simpan Data</button>
+                    <button type="button" class="btn-secondary" style="flex:1;" onclick="closeAdminModal()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+/* --- RESET & VARIABLES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    --primary-blue: #1a5276; --light-blue: #e0f2fe; --accent-blue: #85c1e9; 
+    --gold: #d4af37; --white: #ffffff; --text-dark: #2c3e50;
+    --font-heading: 'Playfair Display', serif; --font-body: 'Poppins', sans-serif;
+}
+body {
+    background: linear-gradient(135deg, #f0f8ff 0%, #d6eaf8 100%);
+    color: var(--text-dark); font-family: var(--font-body); min-height: 100vh;
+}
+
+/* --- ANIMASI TRANSISI HALAMAN --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.page-view { display: none; min-height: 100vh; width: 100%; }
+.page-view.active { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: fadeIn 0.6s ease-out forwards; }
+#student-home-container, #admin-dashboard-container { justify-content: flex-start; }
+
+/* --- AUTENTIKASI --- */
+#pusdasi-logo-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; cursor: pointer; transition: 0.3s; }
+#pusdasi-logo-container:hover { transform: scale(1.05); }
+.logo-text { font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary-blue); letter-spacing: 2px; margin-top: 10px; }
+.auth-box {
+    background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(26, 82, 118, 0.1); width: 90%; max-width: 420px;
+    text-align: center; border-top: 5px solid var(--gold);
+}
+.auth-box h2 { font-family: var(--font-heading); color: var(--primary-blue); margin-bottom: 25px; font-size: 1.8rem; }
+form { display: flex; flex-direction: column; gap: 15px; }
+input, textarea, select {
+    padding: 12px 15px; border: 1px solid #c9d6df; border-radius: 8px; font-size: 0.95rem; font-family: var(--font-body); transition: 0.3s; background: #fcfcfc; width: 100%;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 8px rgba(133, 193, 233, 0.5); }
+.btn-primary { background: linear-gradient(90deg, var(--primary-blue), #2980b9); color: var(--white); border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+.btn-primary:hover { background: linear-gradient(90deg, #2980b9, var(--primary-blue)); transform: translateY(-2px); }
+.btn-secondary { background-color: transparent; color: var(--primary-blue); border: 1.5px solid var(--primary-blue); padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.3s; width: 100%; }
+.btn-secondary:hover { background-color: var(--primary-blue); color: var(--white); }
+.btn-success { background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; cursor: pointer; transition: 0.3s; display: inline-block; }
+.btn-success:hover { background: #219150; }
+.btn-danger { background:#e74c3c; color:#fff; border:none; padding:6px 12px; border-radius:5px; cursor:pointer; font-weight:bold; }
+.btn-edit { background: var(--gold); color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;}
+
+.otp-section { background: var(--light-blue); padding: 15px; border-radius: 8px; border: 1px dashed var(--accent-blue); }
+.timer-text { font-size: 0.85rem; color: #c0392b; margin: 8px 0; font-weight: 600;}
+.simulated-email { font-size: 0.85rem; color: #27ae60; font-weight: 600; margin-bottom: 10px; word-wrap: break-word;}
+.auth-switch { margin-top: 20px; font-size: 0.9rem; }
+.auth-switch a { color: var(--primary-blue); text-decoration: none; font-weight: 600; }
+
+/* --- NAVIGASI --- */
+.luxury-nav { width: 100%; background: var(--primary-blue); color: var(--white); display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; }
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 1.5rem; }
+.burger-menu { cursor: pointer; display: flex; flex-direction: column; gap: 6px; z-index: 100; }
+.burger-menu .bar { width: 30px; height: 3px; background-color: var(--gold); transition: 0.3s; border-radius: 2px;}
+.nav-links { display: none; position: absolute; top: 100%; right: 5%; background: var(--white); min-width: 200px; flex-direction: column; border-radius: 0 0 8px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; z-index: 99; }
+.nav-links a { color: var(--primary-blue); text-decoration: none; padding: 15px 20px; font-weight: 600; border-bottom: 1px solid #eee; transition: 0.3s; display: block;}
+.nav-links a:hover { background: var(--light-blue); padding-left: 25px; }
+.burger-menu.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.burger-menu.active .bar:nth-child(2) { opacity: 0; }
+.burger-menu.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+.nav-links.active { display: flex; }
+.btn-logout { background: var(--gold); color: var(--primary-blue); border: none; padding: 8px 15px; border-radius: 5px; font-weight: 600; cursor: pointer; }
+
+/* --- KARTU BERANDA SISWA --- */
+.home-content { width: 100%; padding: 40px 20px; display: flex; justify-content: center; }
+.formal-card { background: var(--white); width: 100%; max-width: 600px; border-radius: 12px; box-shadow: 0 20px 40px rgba(26, 82, 118, 0.15); border: 1px solid rgba(212, 175, 55, 0.4); overflow: hidden; }
+.card-header { background: linear-gradient(90deg, var(--primary-blue), #2980b9); color: var(--white); padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); }
+.card-header h3 { font-family: var(--font-heading); font-size: 1.4rem; letter-spacing: 1px; }
+.card-body { padding: 30px; display: flex; align-items: center; gap: 30px; }
+
+/* FOTO KOTAK FORMAL SISWA */
+.photo-wrapper {
+    width: 140px; height: 140px; 
+    background: var(--light-blue);
+    border: 3px solid var(--primary-blue); 
+    border-radius: 4px; 
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.photo-placeholder-text { color: var(--primary-blue); font-weight: 600; font-size: 0.9rem; text-align: center; }
+
+.student-details { flex-grow: 1; }
+.formal-name { font-family: var(--font-heading); color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; color: #555; }
+.bold-value { font-weight: 600; color: var(--text-dark); }
+.notes-box { margin: 0 30px 30px 30px; padding: 20px; background: #fbfcfc; border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; }
+.notes-title { font-weight: 600; color: var(--primary-blue); display: block; margin-bottom: 8px;}
+
+/* --- PANEL ADMIN TABLE --- */
+.admin-content { width: 95%; max-width: 1100px; margin: 40px auto; }
+.formal-heading { font-family: var(--font-heading); color: var(--primary-blue); margin-bottom: 20px; text-align: center;}
+.table-responsive { width: 100%; overflow-x: auto; background: var(--white); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+table { width: 100%; border-collapse: collapse; min-width: 800px; }
+th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; vertical-align: middle;}
+th { background-color: var(--primary-blue); color: var(--white); font-weight: 600; }
+tr:hover { background-color: var(--light-blue); }
+.admin-table-photo { width: 50px; height: 50px; border-radius: 4px; object-fit: cover; border: 1px solid #ccc; display: block; }
+
+/* --- MODAL POP-UP WINDOW --- */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease-out; }
+.modal-content { max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; text-align: left; }
+.modal-content h2 { text-align: center; }
+.modal-file-section { background: #f4f7f6; padding: 15px; border-radius: 8px; border: 1px solid #ddd; display: flex; flex-direction: column; gap: 8px;}
+.modal-file-section label { font-size: 0.9rem; font-weight: 600; color: var(--primary-blue); margin-top: 5px; }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .card-body { flex-direction: column; text-align: center; gap: 20px; }
+    .photo-wrapper { margin: 0 auto; }
+    .detail-row { flex-direction: column; text-align: center; gap: 5px; margin-bottom: 15px; }
+}
